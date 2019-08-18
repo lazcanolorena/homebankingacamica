@@ -1,7 +1,7 @@
 //Declaración de variables
-var nombreUsuario = "Ricardo Lopez"
-var limiteExtraccion = 4000
-var saldoCuenta = 15000
+var nombreUsuario = "Ricardo Lopez";
+var limiteExtraccion = 4000;
+var saldoCuenta = 15000;
 var agua = 350;
 var telefono = 425;
 var luz = 210;
@@ -30,10 +30,10 @@ window.onload = function () {
 function cambiarLimiteDeExtraccion() {
     var cambiarLimiteString = prompt("Ingrese nuevo limite extracción");
     var cambiarLimite = parseInt(cambiarLimiteString);
-    if cambiarLimite != NaN{
+    if (cambiarLimite!=NaN && cambiarLimite>0) {
     limiteExtraccion = cambiarLimite;
     actualizarLimiteEnPantalla();
-    alert("Su nuevo límite de extraccion es" + limiteExtraccion)
+    alert("Su nuevo límite de extraccion es:  " + limiteExtraccion)
     }else{
     alert ("Ingreso un valor invalido");
     }
@@ -41,36 +41,56 @@ function cambiarLimiteDeExtraccion() {
 
 function extraerDinero() {
     var retiroString = prompt("Por favor, ingrese la suma que desea extraer");
-    var retiro = parseInt(retiroString);
+    if(!isNaN(retiroString)) {
+        var retiro = parseInt(retiroString);
     //validacion operacion
+        if (retiro>0)  {
+        
+            if (retiro > saldoCuenta) {
+                alert("No hay saldo disponible en tu cuenta para extraer esa cantidad de dinero");
+            }
+            else if (retiro > limiteExtraccion) {
+                alert("No pude superar el limite de extraccion");
+            }
+            else if ((retiro % 100)!= 0) {
+                alert("Solo puede extraer billetes de 100");
+            }
+            else {
+                //funcionalidades si pasa las validaciones
+                var almacenarSaldoRetiro = saldoCuenta;
+                restarDinero(retiro);
+                actualizarSaldoEnPantalla();
+                alert("Has retirado:  " + retiro +"\nSaldo Anterior:  " + almacenarSaldoRetiro + "\nSaldo Actual:  " + saldoCuenta);
+            }
+        }
+        else{
+        alert ("Ingrese un monto mayor");
+        return;
+        
+        }
+        
+    } else {
+      alert ("Ingrese un valor número")
+     return;
+    }
+    }
 
-    if (retiro > saldoCuenta) {
-        alert("No hay saldo disponible en tu cuenta para extraer esa cantidad de dinero");
-    }
-    else if (retiro > limiteExtraccion) {
-        alert("No pude superar el limite de extraccion");
-    }
-    else if ((retiro % 100) != 0) {
-        alert("Solo puede extraer billetes de 100");
-    }
-    else {
-        //funcionalidades si pasa las validaciones
-        var almacenarSaldoRetiro = saldoCuenta;
-        restarDinero(retiro);
-        actualizarSaldoEnPantalla();
-        alert("Has retirado:" + retiro + "\nSaldo Anterior:" + almacenarSaldoRetiro + "\nSaldo Actual" + saldoCuenta);
-    }
-}
+
 
 
     function depositarDinero() {
         var depositoString = prompt("Por favor, ingrese la suma que desea depositar");
-        var deposito = parseInt(depositoString);
-        var almacenarSaldo = 15000;
-        sumarDinero(deposito);
-        actualizarSaldoEnPantalla();
-        alert("Usted deposito:" + deposito + "\nSaldo Anterior:" + almacenarSaldo + "\nSaldo Actual" + saldoCuenta);
-    }
+         if (depositoString!=NaN && depositoString>0) {
+         var deposito = parseInt(depositoString);
+         var almacenarSaldo = 15000;
+         sumarDinero(deposito);
+         actualizarSaldoEnPantalla();
+         alert("Usted depositó: " + deposito + "\nSaldo Anterior: " + almacenarSaldo + "\nSaldo Actual: " + saldoCuenta);
+          }else {
+            alert ("Ingreso un valor invalido");
+                }
+                            }
+
 
     function pagarServicio() {
         var saldoanteriorparaservicios= saldoCuenta;
@@ -82,40 +102,40 @@ function extraerDinero() {
                     alert("No posee fondos suficientes");
                 }
                 else {
-                    alert("Has pagado el servicio de agua\n Saldo anterior:" +saldoanteriorparaservicios+"Dinero descontado:\n"+agua+ "Saldo Actual:"+saldoCuenta);
+                    alert("Has pagado el servicio de agua\nSaldo anterior:  " +saldoanteriorparaservicios+"\nDinero descontado:  "+agua+ "\nSaldo Actual:  "+saldoCuenta);
                     restarDinero(agua);
                     actualizarSaldoEnPantalla();
                 }
                     break;
             case "2":
-                        if(telefono>saldoCuenta){
+                        if(luz>saldoCuenta){
                             alert("No posee fondos suficientes");
                         }
                         else {
                         
-                            alert("Has pagado el servicio de teléfono\n Saldo anterior:" +saldoanteriorparaservicios+"Dinero descontado:\n"+telefono+ "Saldo Actual:"+saldoCuenta);
-                            restarDinero(telefono);
+                            alert("Has pagado el servicio de luz\nSaldo anterior: " +saldoanteriorparaservicios+"\nDinero descontado: "+luz+ "\nSaldo Actual: "+saldoCuenta);
+                            restarDinero(luz);
                             actualizarSaldoEnPantalla();
                         }
                             break;
             case "3":
-                               if(luz > saldoCuenta){
+                               if(internet > saldoCuenta){
                                     alert("No posee fondos suficientes");
                                 }
                                 else {
-                                    alert("Has pagado el servicio de teléfono\n Saldo anterior:" +saldoanteriorparaservicios+"Dinero descontado:\n"+luz+ "Saldo Actual:"+saldoCuenta);
-                                    restarDinero(luz);
+                                    alert("Has pagado el servicio de Internet\nSaldo anterior:  " +saldoanteriorparaservicios+"\nDinero descontado:  "+internet+ "\nSaldo Actual:  "+saldoCuenta);
+                                    restarDinero(internet);
                                     actualizarSaldoEnPantalla();
                                 }
                                     break;
 
              case "4":
-                                        if(internet> saldoCuenta){
+                                        if(telefono> saldoCuenta){
                                             alert("No posee fondos suficientes");
                                         }
                                         else {
-                                            alert("Has pagado el servicio de teléfono\n Saldo anterior:" +saldoanteriorparaservicios+"Dinero descontado:\n"+internet+ "Saldo Actual:"+saldoCuenta);
-                                            restarDinero(internet);
+                                            alert("Has pagado el servicio de Teléfono \nSaldo anterior:  " +saldoanteriorparaservicios+"\nDinero descontado: "+telefono+ "\nSaldo Actual:  "+saldoCuenta);
+                                            restarDinero(telefono);
                                             actualizarSaldoEnPantalla();
                                         }
                                             break;
@@ -125,8 +145,8 @@ function extraerDinero() {
     function transferirDinero() {
         
             var transferencia = prompt("Indique el monto de dinero que desea transferir: ");
-            stringtransferencia = parseInt(transferencia);
-            if (!isNaN(transferencia)) {
+            if (!isNaN(transferencia)&& transferencia>0){
+                   stringtransferencia = parseInt(transferencia)
                 if (transferencia <= saldoCuenta) {
                     var cuentaIngresada = prompt ("Indique el número de cuenta para transferir el dinero: ");
                     var cuentraIngresadaString = parseInt(cuentaIngresada); }
@@ -135,11 +155,12 @@ function extraerDinero() {
                 if (cuentaIngresada == Cuentaamiga1 || cuentaIngresada == Cuentaamiga2) {
                     restarDinero(transferencia);
                     actualizarSaldoEnPantalla();
-                    alert("Se ha transferido\n"+transferencia+"A la cuentra nro"+cuentaIngresada)
+                    alert("Se ha transferido:  "+transferencia+"\n A la cuenta nro:  "+cuentaIngresada)
                 }else if (cuentaIngresada !=Cuentaamiga1 || cuentaIngresada !=Cuentaamiga2){
                     alert("Sólo puede transferir dinero a sus cuentas amigas.")};
             }else {
                 alert("Datos incorrectos. Vuelva a intentar.");
+                return;
             }
         }
     
