@@ -82,7 +82,7 @@ function extraerDinero() {
         var depositoString = prompt("Por favor, ingrese la suma que desea depositar");
          if (depositoString!=NaN && depositoString>0) {
          var deposito = parseInt(depositoString);
-         var almacenarSaldo = 15000;
+         var almacenarSaldo = saldoCuenta;
          sumarDinero(deposito);
          actualizarSaldoEnPantalla();
          alert("Usted depositó: " + deposito + "\nSaldo Anterior: " + almacenarSaldo + "\nSaldo Actual: " + saldoCuenta);
